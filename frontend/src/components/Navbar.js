@@ -1,0 +1,90 @@
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { Navbar, Nav, Container, Button } from 'react-bootstrap';
+
+function NavigationBar() {
+  const location = useLocation();
+  const token = localStorage.getItem('token');
+  const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
+
+  return (
+    <Navbar bg="dark" variant="dark" expand="lg" sticky="top" className="navbar-custom">
+      <Container>
+        <Navbar.Brand as={Link} to="/" className="fw-bold">
+          <span style={{ color: '#4CAF50', marginRight: '8px', fontSize: '1.8rem' }}>❤️</span>
+          <span style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', 
+                         WebkitBackgroundClip: 'text',
+                         WebkitTextFillColor: 'transparent',
+                         backgroundClip: 'text' }}>
+            DonateHub
+          </span>
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
+            <Nav.Link as={Link} to="/" active={location.pathname === '/'} className="fw-600">
+              Home
+            </Nav.Link>
+            <Nav.Link as={Link} to="/charities" active={location.pathname === '/charities'} className="fw-600">
+              Charities
+            </Nav.Link>
+            <Nav.Link as={Link} to="/donations" active={location.pathname === '/donations'} className="fw-600">
+              All Donations
+            </Nav.Link>
+            {!token && (
+              <>
+                <Nav.Link as={Link} to="/register" active={location.pathname === '/register'} className="fw-600">
+                  Register
+                </Nav.Link>
+                <Nav.Link as={Link} to="/login" active={location.pathname === '/login'} className="fw-600">
+                  Login
+                </Nav.Link>
+              </>
+            )}
+            {token && (
+              <Nav.Link as={Link} to="/profile" active={location.pathname === '/profile'} className="fw-600">
+                Profile
+              </Nav.Link>
+            )}
+          </Nav>
+          <div className="d-flex gap-2 flex-wrap">
+            <Button 
+              as={Link} 
+              to="/charities" 
+              className="btn btn-success-custom"
+              style={{background: 'linear-gradient(135deg, #4CAF50 0%, #45a049 100%)'}}
+            >
+              💚 Donate Now
+            </Button>
+            {!token ? (
+              <>
+                <Button as={Link} to="/login" variant="outline-light" className="fw-600">
+                  Sign In
+                </Button>
+                <Button as={Link} to="/register" variant="outline-light" className="fw-600">
+                  Sign Up
+                </Button>
+              </>
+            ) : (
+              <>
+                <span className="text-white me-3 d-flex align-items-center fw-600">
+                  Welcome, {user?.name || 'User'}!
+                </span>
+                <Button 
+                  as={Link} 
+                  to="/profile" 
+                  variant="outline-light"
+                  className="fw-600"
+                >
+                  👤 My Profile
+                </Button>
+              </>
+            )}
+          </div>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
+  );
+}
+
+export default NavigationBar;
