@@ -18,6 +18,12 @@ const charitySchema = new mongoose.Schema({
     enum: ['pending', 'verified', 'rejected'],
     default: 'pending'
   },
+  submittedBy: {
+    name: String,
+    email: String,
+    submissionReason: String,
+    submittedAt: Date
+  },
   totalDonations: {
     type: Number,
     default: 0

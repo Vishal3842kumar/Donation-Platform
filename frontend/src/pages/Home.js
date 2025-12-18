@@ -148,6 +148,18 @@ function Home() {
           </Col>
         </Row>
       </div>
+
+      {/* CTA Section - Add Your Charity */}
+      <div className="mb-5 p-5 rounded text-center" style={{background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)', color: 'white'}}>
+        <h2 style={{fontSize: '2rem', fontWeight: 700, marginBottom: '1rem'}}>Is Your Charity Not Listed?</h2>
+        <p style={{fontSize: '1.1rem', marginBottom: '2rem', maxWidth: '500px', margin: '0 auto 2rem auto'}}>
+          We're always looking to partner with verified charitable organizations. 
+          Submit your charity information and our team will review it promptly.
+        </p>
+        <Button as={Link} to="/contact-us" className="btn btn-light" style={{fontWeight: 600, padding: '12px 30px', fontSize: '1.1rem'}}>
+          ➕ Add Your Charity
+        </Button>
+      </div>
     </Container>
   );
 }

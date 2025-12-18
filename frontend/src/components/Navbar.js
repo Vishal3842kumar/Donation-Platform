@@ -31,6 +31,9 @@ function NavigationBar() {
             <Nav.Link as={Link} to="/donations" active={location.pathname === '/donations'} className="fw-600">
               All Donations
             </Nav.Link>
+            <Nav.Link as={Link} to="/contact-us" active={location.pathname === '/contact-us'} className="fw-600">
+              Add Charity
+            </Nav.Link>
             {!token && (
               <>
                 <Nav.Link as={Link} to="/register" active={location.pathname === '/register'} className="fw-600">

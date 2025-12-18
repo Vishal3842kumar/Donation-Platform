@@ -13,6 +13,7 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import DonationsList from './pages/DonationsList';
 import Profile from './pages/Profile';
+import ContactUs from './pages/ContactUs';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
             <Route path="/donations" element={<DonationsList />} />
             <Route path="/donate/:charityId" element={<DonationForm />} />
             <Route path="/receipt/:donationId" element={<Receipt />} />
+            <Route path="/contact-us" element={<ContactUs />} />
           </Routes>
         </div>
       </div>
