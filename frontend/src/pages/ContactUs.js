@@ -30,7 +30,7 @@ function ContactUs() {
     setError('');
 
     try {
-      const response = await api.post('/charities/request', formData);
+      await api.post('/charities/request', formData);
 
       setSubmitted(true);
       setFormData({
