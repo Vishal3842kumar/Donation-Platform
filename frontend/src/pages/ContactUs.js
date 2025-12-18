@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Form, Button, Alert, Card } from 'react-bootstrap';
-import { API_BASE_URL } from '../services/api';
+import api from '../services/api';
 
 function ContactUs() {
   const [formData, setFormData] = useState({
@@ -30,20 +30,8 @@ function ContactUs() {
     setError('');
 
     try {
-      const response = await fetch(`${API_BASE_URL}/charities/request`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      });
+      const response = await api.post('/charities/request', formData);
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to submit request');
-      }
-
-      const result = await response.json();
       setSubmitted(true);
       setFormData({
         charityName: '',
@@ -58,7 +46,7 @@ function ContactUs() {
       // Reset submitted message after 5 seconds
       setTimeout(() => setSubmitted(false), 5000);
     } catch (err) {
-      setError(err.message || 'An error occurred. Please try again.');
+      setError(err.response?.data?.error || err.message || 'An error occurred. Please try again.');
       console.error('Error:', err);
     } finally {
       setLoading(false);
