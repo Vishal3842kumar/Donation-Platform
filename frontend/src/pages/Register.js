@@ -18,6 +18,14 @@ function Register() {
       const res = await api.post('/users/register', { name, email, password });
       if (res.data && res.data.token) {
         localStorage.setItem('token', res.data.token);
+        if (res.data.user) {
+          localStorage.setItem('user', JSON.stringify(res.data.user));
+          try {
+            window.dispatchEvent(new CustomEvent('userChanged', { detail: res.data.user }));
+          } catch (e) {
+            window.dispatchEvent(new Event('userChanged'));
+          }
+        }
       }
       setSuccess('Registration successful — redirecting...');
       setTimeout(() => navigate('/'), 900);

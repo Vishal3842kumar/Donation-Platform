@@ -33,11 +33,13 @@ mongoose.connect(process.env.MONGODB_URI)
 const donationRoutes = require('./routes/donations');
 const charityRoutes = require('./routes/charities');
 const userRoutes = require('./routes/users');
+const adminRoutes = require('./routes/admin');
 
 // Routes
 app.use('/api/donations', donationRoutes);
 app.use('/api/charities', charityRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Serve static files in production
 if (process.env.NODE_ENV === 'production') {

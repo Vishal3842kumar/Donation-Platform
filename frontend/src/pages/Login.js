@@ -18,6 +18,12 @@ function Login() {
       if (res.data && res.data.token) {
         localStorage.setItem('token', res.data.token);
         localStorage.setItem('user', JSON.stringify(res.data.user));
+        try {
+          window.dispatchEvent(new CustomEvent('userChanged', { detail: res.data.user }));
+        } catch (e) {
+          // fallback: call storage event handler indirectly
+          window.dispatchEvent(new Event('userChanged'));
+        }
       }
       setSuccess('Login successful — redirecting...');
       setTimeout(() => navigate('/profile'), 900);

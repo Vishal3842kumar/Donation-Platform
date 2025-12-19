@@ -1,11 +1,47 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Navbar, Nav, Container, Button } from 'react-bootstrap';
 
 function NavigationBar() {
   const location = useLocation();
-  const token = localStorage.getItem('token');
-  const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
+  const [token, setToken] = useState(() => localStorage.getItem('token'));
+  const [user, setUser] = useState(() => {
+    try {
+      const raw = localStorage.getItem('user');
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) {
+      return null;
+    }
+  });
+
+  useEffect(() => {
+    const onStorage = () => {
+      try {
+        setToken(localStorage.getItem('token'));
+        const raw = localStorage.getItem('user');
+        setUser(raw ? JSON.parse(raw) : null);
+      } catch (e) {
+        setToken(null);
+        setUser(null);
+      }
+    };
+
+    const onUserChanged = (e) => {
+      if (e?.detail) {
+        setUser(e.detail);
+        setToken(localStorage.getItem('token'));
+      } else {
+        onStorage();
+      }
+    };
+
+    window.addEventListener('storage', onStorage);
+    window.addEventListener('userChanged', onUserChanged);
+    return () => {
+      window.removeEventListener('storage', onStorage);
+      window.removeEventListener('userChanged', onUserChanged);
+    };
+  }, []);
 
   return (
     <Navbar bg="dark" variant="dark" expand="lg" sticky="top" className="navbar-custom">
@@ -45,9 +81,16 @@ function NavigationBar() {
               </>
             )}
             {token && (
-              <Nav.Link as={Link} to="/profile" active={location.pathname === '/profile'} className="fw-600">
-                Profile
-              </Nav.Link>
+              <>
+                <Nav.Link as={Link} to="/profile" active={location.pathname === '/profile'} className="fw-600">
+                  Profile
+                </Nav.Link>
+                {user?.isAdmin && (
+                  <Nav.Link as={Link} to="/admin" active={location.pathname === '/admin'} className="fw-600">
+                    Admin
+                  </Nav.Link>
+                )}
+              </>
             )}
           </Nav>
           <div className="d-flex gap-2 flex-wrap">
@@ -73,6 +116,11 @@ function NavigationBar() {
                 <span className="text-white me-3 d-flex align-items-center fw-600">
                   Welcome, {user?.name || 'User'}!
                 </span>
+                {user?.isAdmin && (
+                  <Button as={Link} to="/admin" variant="outline-light" className="fw-600 me-2">
+                    ⚙️ Admin
+                  </Button>
+                )}
                 <Button 
                   as={Link} 
                   to="/profile" 

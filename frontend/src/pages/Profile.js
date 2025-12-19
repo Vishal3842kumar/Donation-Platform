@@ -75,6 +75,11 @@ function Profile() {
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    try {
+      window.dispatchEvent(new CustomEvent('userChanged', { detail: null }));
+    } catch (e) {
+      window.dispatchEvent(new Event('userChanged'));
+    }
     navigate('/');
   };
 

@@ -88,6 +88,18 @@ async function seedDatabase() {
       await sampleUser.save();
       console.log('Added sample user: seeduser@example.com (password: password123)');
 
+    // Create an admin user
+    const adminPassword = 'Vs2312@lpu';
+    const adminHashed = await bcrypt.hash(adminPassword, 10);
+    const adminUser = new User({
+      name: 'Vishal Kumar',
+      email: 'vishal3842kumar@gmail.com',
+      password: adminHashed,
+      isAdmin: true
+    });
+    await adminUser.save();
+    console.log('Added admin user: vishal3842kumar@gmail.com (password: admin123)');
+
     console.log('Database seeded successfully!');
     process.exit(0);
   } catch (error) {

@@ -30,6 +30,11 @@ function Home() {
       {/* Hero Section */}
       <div className="hero-section text-center mb-5">
         <h1 className="display-4 mb-4">Make a Difference Today</h1>
+        {user ? (
+          <h4 className="mb-3" style={{ fontWeight: 600 }}>
+            Welcome, {user?.name || user?.username || 'User'}!
+          </h4>
+        ) : null}
         <p className="lead mb-5">
           Support causes you care about with our secure, transparent donation platform.
           Every contribution makes an impact.

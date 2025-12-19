@@ -14,6 +14,7 @@ import Login from './pages/Login';
 import DonationsList from './pages/DonationsList';
 import Profile from './pages/Profile';
 import ContactUs from './pages/ContactUs';
+import Admin from './pages/Admin';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
             <Route path="/donate/:charityId" element={<DonationForm />} />
             <Route path="/receipt/:donationId" element={<Receipt />} />
             <Route path="/contact-us" element={<ContactUs />} />
+            <Route path="/admin" element={<Admin />} />
           </Routes>
         </div>
       </div>
